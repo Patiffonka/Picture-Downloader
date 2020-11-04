@@ -71,15 +71,6 @@ void Downloader::slotFinished(QNetworkReply *reply)
     }
     else {
 
-        previewList.clear();
-        fileSizeInBytesList.clear();
-        widthList.clear();
-        heightList.clear();
-        urlList.clear();
-        tooltipList.clear();
-        iconList.clear();
-        fileList.clear();
-
         picItemList.clear();
 
         QByteArray ba = reply->readAll();
@@ -103,35 +94,29 @@ void Downloader::slotFinished(QNetworkReply *reply)
             PictureItem *picItem = new PictureItem();
 
             qDebug() << "Hires: " << rx_hires.cap(2);
-            urlList.append(rx_hires.cap(2));
             picItem->setPi_Url(rx_hires.cap(2));
 
             pos = rx_preview.indexIn(ba,pos);
             QString previewUrl = rx_preview.cap(2);
             previewUrl.chop(9);
-            previewList.append(previewUrl);
             //qDebug() << "Preview: " << rx_preview.cap(2);
 
             pos = rx_tooltip.indexIn(ba,pos);
-            tooltipList.append(rx_tooltip.cap(2));
             picItem->setPi_tooltip(rx_tooltip.cap(2));
             //qDebug() << "Tooltip: " << rx_tooltip.cap(2);
 
             pos = rx_filesize.indexIn(ba,pos);
             int fileSize = rx_filesize.cap(2).toInt();
-            fileSizeInBytesList.append(fileSize);
             picItem->setPi_fileSizeInBytes(rx_filesize.cap(2).toInt());
             //qDebug() << "File size: " << fileSize;
 
             pos = rx_width.indexIn(ba,pos);
             int fileWidth = rx_width.cap(2).toInt();
-            widthList.append(fileWidth);
             picItem->setPi_width(rx_width.cap(2).toInt());
             //qDebug() << "File Width: " << fileWidth;
 
             pos = rx_height.indexIn(ba,pos);
             int fileHeight = rx_height.cap(2).toInt();
-            heightList. append(fileHeight);
             picItem->setPi_height(rx_height.cap(2).toInt());
             //qDebug() << "File Height: " << fileHeight;
 
@@ -141,7 +126,7 @@ void Downloader::slotFinished(QNetworkReply *reply)
 
         }
 
-        qDebug() << "Parsing path is done." << urlList.count() << " objects finded";
+        qDebug() << "Parsing path is done." << picItemList.count() << " objects finded";
 
     }
 
@@ -189,8 +174,6 @@ void Downloader::downloadPicture(QNetworkReply *reply)
             file.write(ba);
             file.close();
         }
-
-        fileList.append(filename);
 
         QIcon *newIcon = new QIcon(filename);
 

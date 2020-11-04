@@ -32,14 +32,6 @@ private slots:
 private:
     QNetworkAccessManager *pnam;
     QNetworkAccessManager *manager;
-    QStringList previewList;
-    QVector<int> fileSizeInBytesList;
-    QVector<int> widthList;
-    QVector<int> heightList;
-    QStringList urlList;
-    QStringList tooltipList;
-    QStringList fileList;
-    QList<QIcon*> iconList;
     QUrl url;
     QString dirName;
     QString temppath;
